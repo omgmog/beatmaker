@@ -1,0 +1,49 @@
+body {
+  background: #222;
+  display: flex;
+}
+
+.grid {
+  padding: 20px;
+  overflow: hidden;
+  button {
+    background: transparent;
+    border: 4px solid #fff;
+    padding: 0;
+    margin: 0 10px 10px 0;
+    width: 40px;
+    height: 40px;
+    float: left;
+    &:hover {
+      background: rgba(#fff, .2);
+    }
+    &.on {
+      background: #fff;
+      &:hover {
+        background: rgba(#fff, .8);
+      }
+    }
+    &.first {
+      clear: left;
+    }
+    &.ticked {
+      background: lightgreen;
+      &:hover {
+        background: rgba(lightgreen, .8);
+      }
+    }
+  }
+}
+
+.controls {
+  padding: 20px;
+  button {
+    background: #fff;
+    text-transform: uppercase;
+    border: 0;
+    display: inline-block;
+    margin-right: 10px;
+    height: 50%;
+    width: 100px;
+  }
+}
