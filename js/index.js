@@ -48,7 +48,7 @@
     if (!$onbeats.length) return;
     for (var r = 0; r < slength; r++) {
       for (var c = 0; c < TICKS; c++) {
-        $onbeats[r * c].classList.remove('on');
+        $onbeats[c + (r * TICKS)].classList.remove('on');
       }
     }
   };
@@ -61,7 +61,7 @@
       for (var c = 0; c < TICKS; c++) {
         var num = Math.ceil(Math.random() * 100) % 3;
         if (num === 0) {
-          $beats[r * c].classList.toggle('on');
+          $beats[c + (r * TICKS)].classList.toggle('on');
         }
       }
     }
