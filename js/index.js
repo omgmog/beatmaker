@@ -22,6 +22,40 @@
     'sounds/claves.wav',
     'sounds/maracas.wav'
   ];
+  var buffers = {};
+  var context = new AudioContext();
+
+  var playSound = function (index) {
+    var url = soundPrefix + sounds[index];
+    if (typeof(buffers[url]) == 'undefined') {
+      buffers[url] = null;
+      var req = new XMLHttpRequest();
+      req.open('GET', url, true);
+      req.responseType = 'arraybuffer';
+
+      req.onload = function () {
+        context.decodeAudioData(req.response,
+          function (buffer) {
+            buffers[url] = buffer;
+            playBuffer(buffer);
+          },
+          function (err) {
+            console.log(err);
+          }
+        );
+      };
+      req.send();
+    }
+    function playBuffer(buffer) {
+      var source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(context.destination);
+      source.start();
+    };
+    if (buffers[url]) {
+      playBuffer(buffers[url]);
+    }
+  };
   var slength = sounds.length;
   var $grid = document.querySelectorAll('.grid')[0];
   var $button = document.createElement('button');
@@ -48,7 +82,10 @@
     if (!$onbeats.length) return;
     for (var r = 0; r < slength; r++) {
       for (var c = 0; c < TICKS; c++) {
-        $onbeats[c + (r * TICKS)].classList.remove('on');
+        var cell = $onbeats[c + (r * TICKS)];
+        if (cell) {
+          cell.classList.remove('on');
+        }
       }
     }
   };
@@ -96,7 +133,9 @@
       lastBeat.classList.remove('ticked');
       currentBeat.classList.add('ticked');
       if (currentBeat.classList.contains('on')) {
-        new Audio(soundPrefix + sounds[i]).play();
+        // new Audio(soundPrefix + sounds[i]).play();
+
+        playSound(i);
       }
     }
     lastTick = currentTick;
