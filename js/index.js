@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+  var AudioContext = window.AudioContext || window.webkitAudioContext || false;
 
   var BPM = 120;
   var TICKS = 16;
@@ -23,10 +24,17 @@
     'sounds/maracas.wav'
   ];
   var buffers = {};
-  var context = new AudioContext();
+  if (AudioContext) {
+    var context = new AudioContext();
+  }
 
   var playSound = function (index) {
     var url = soundPrefix + sounds[index];
+
+    if (!AudioContext) {
+      new Audio(url).play();
+      return;
+    }
     if (typeof(buffers[url]) == 'undefined') {
       buffers[url] = null;
       var req = new XMLHttpRequest();
