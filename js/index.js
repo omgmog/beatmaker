@@ -43,7 +43,19 @@
 
   var $beats = document.querySelectorAll('.beat');
 
+  var clearBeat = function() {
+    var $onbeats = document.querySelectorAll('.beat.on');
+    if (!$onbeats.length) return;
+    for (var r = 0; r < slength; r++) {
+      for (var c = 0; c < TICKS; c++) {
+        $onbeats[r * c].classList.remove('on');
+      }
+    }
+  };
+  document.querySelector('#clear').addEventListener('click', clearBeat);
+
   var setRandomBeat = function() {
+    clearBeat();
 
     for (var r = 0; r < slength; r++) {
       for (var c = 0; c < TICKS; c++) {
@@ -55,15 +67,6 @@
     }
   };
   document.querySelector('#random').addEventListener('click', setRandomBeat);
-
-  var clearBeat = function() {
-    for (var r = 0; r < slength; r++) {
-      for (var c = 0; c < TICKS; c++) {
-        $beats[r * c].classList.remove('on');
-      }
-    }
-  };
-  document.querySelector('#clear').addEventListener('click', clearBeat);
 
   var currentTick = 0;
   var lastTick = TICKS - 1;
