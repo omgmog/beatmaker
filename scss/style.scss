@@ -1,19 +1,32 @@
 body {
   background: #222;
   display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
 .grid {
   padding: 20px;
   overflow: hidden;
+  width: 800px;
+  height: 40em;
+  background-color: #333;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+
   button {
     background: transparent;
     border: 4px solid #fff;
     padding: 0;
-    margin: 0 10px 10px 0;
-    width: 40px;
-    height: 40px;
-    float: left;
+    margin: 0;
+    height: 1em;
+    box-sizing: border-box;
+    flex: 1 1 5.25%;
+    margin: 1em .5% 5px;
+    position: relative;
+    outline: none;
+
     &:hover {
       background: rgba(#fff, .2);
     }
@@ -24,7 +37,14 @@ body {
       }
     }
     &.first {
-      clear: left;
+      &::before {
+        content: attr(data-instrument);
+        position: absolute;
+        left: 0;
+        top: -1.5em;
+        color: #fff;
+        text-align: left;
+      }
     }
     &.ticked {
       background: lightgreen;
@@ -37,13 +57,17 @@ body {
 
 .controls {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+
   button {
     background: #fff;
     text-transform: uppercase;
     border: 0;
     display: inline-block;
     margin-right: 10px;
-    height: 50%;
     width: 100px;
+    flex: 0 1 100px;
+    margin-bottom: 20px;
   }
 }
